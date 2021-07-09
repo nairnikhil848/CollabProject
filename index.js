@@ -38,16 +38,13 @@ function display(task){
         $('<label>'+task.text+'</label>').appendTo(newli);
 
         if(task.isstriked){
-
-            console.log("here")
             $(newli).children().css('text-decoration', 'line-through');
         }
         
-
         var btn = document.createElement("button");
-        var txt = document.createTextNode("\u00D7");
+        var txt = document.createTextNode("Toggle");
         btn.appendChild(txt);
-        btn.addEventListener('click', strikeATask );
+        btn.addEventListener('click', toggleStrike );
         btn.className = "close";
         
         newli.appendChild(document.createTextNode("\u00A0"));
@@ -55,22 +52,37 @@ function display(task){
         newli.appendChild(document.createTextNode("..."));
         newli.appendChild(document.createTextNode(moment(task.dateAdded).fromNow()));
         newli.appendChild(document.createTextNode("\u00A0"));
+        newli.appendChild(document.createTextNode("\u00A0"));
+        newli.appendChild(document.createTextNode("\u00A0"));
     
         newli.appendChild(btn);
 
         $("#list").prepend(newli);
 }
-function strikeATask(){
+
+function toggleStrike(){
     var li = $(this).parent();
-    StrikeInBackend(li.attr('id'));
-    li.find('label').css('text-decoration', 'line-through');
-
-}
-
-function StrikeInBackend(id){
+    var id = li.attr('id');
     var list = service.getList();
-    list[id].isstriked = true;
-    service.save(list);
+    for(i=0;i<list.length;i++){
+        if(list[i].id == id){
+
+            toggleInList(li,list[i])
+            service.save(list);
+
+        }  
+    }
+}
+function toggleInList(li,task){
+    if(task.isstriked){
+        task.isstriked = false;
+        li.find('label').css('text-decoration', 'none');
+        service.save(list);
+        return
+    }
+    task.isstriked =true;
+    li.find('label').css('text-decoration', 'line-through');
+    return
 }
 
 
