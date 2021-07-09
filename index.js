@@ -35,6 +35,7 @@ function display(task){
 
         var newli = document.createElement("li");
         newli.id = task.id ;   
+        newli.classList="list-group-item";
         $('<label>'+task.text+'</label>').appendTo(newli);
 
         if(task.isstriked){
@@ -45,7 +46,7 @@ function display(task){
         var txt = document.createTextNode("Toggle");
         btn.appendChild(txt);
         btn.addEventListener('click', toggleStrike );
-        btn.className = "close";
+        btn.className = "close btn btn-warning";
         
         newli.appendChild(document.createTextNode("\u00A0"));
         newli.appendChild(document.createTextNode("\u00A0"));
