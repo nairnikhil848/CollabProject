@@ -4,6 +4,7 @@ function task (id,text,isstriked,dateAdded) {
     this.isstriked = isstriked;
     this.dateAdded = dateAdded;
 }
+
 var service = function(){
     var  data = {}
 
@@ -34,12 +35,9 @@ function display(task){
         $('<label>'+task.text+'</label>').appendTo(newli);
 
         if(task.isstriked){
-
-            console.log("here")
             $(newli).children().css('text-decoration', 'line-through');
         }
         
-
         var btn = document.createElement("button");
         var txt = document.createTextNode("Toggle");
         btn.appendChild(txt);
@@ -65,29 +63,23 @@ function toggleStrike(){
     var list = service.getList();
     for(i=0;i<list.length;i++){
         if(list[i].id == id){
-            if(list[i].isstriked){
-                list[i].isstriked =false;
-                li.find('label').css('text-decoration', 'none');
-                service.save(list);
-                return
-            }
-            list[i].isstriked =true;
-            li.find('label').css('text-decoration', 'line-through');
+
+            toggleInList(li,list[i])
             service.save(list);
+
         }  
     }
-
-
-    service.getList()
-    StrikeInBackend(li.attr('id'));
-    li.find('label').css('text-decoration', 'line-through');
-
 }
-
-function StrikeInBackend(id){
-    var list = service.getList();
-    list[id].isstriked = true;
-    service.save(list);
+function toggleInList(li,task){
+    if(task.isstriked){
+        task.isstriked = false;
+        li.find('label').css('text-decoration', 'none');
+        service.save(list);
+        return
+    }
+    task.isstriked =true;
+    li.find('label').css('text-decoration', 'line-through');
+    return
 }
 
 
