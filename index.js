@@ -4,3 +4,4 @@ function task (id,text,isstriked,dateAdded) {
     this.isstriked = isstriked;
     this.dateAdded = dateAdded;
 }
+
