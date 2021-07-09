@@ -100,12 +100,25 @@ function addtoList(){
     service.save(list);
 
     display(newtask)
+    lastUpdate();
+    totalItems();
     
 }
 
+$("#deletebtn").click(deleteAll);
+function deleteAll(){
+    var emptyList=[];
+    service.save(emptyList);
+    lastUpdate();
+    totalItems();
+    $("#list").empty();
+}
 
 function lastUpdate(){
-
+var time = new Date();
+var updatedTime=time.toLocaleString('en-US', { hour: 'numeric',minute:'numeric',second:'numeric', hour12: true });
+console.log(updatedTime);
+ document.getElementById("lastUpdate").innerHTML=updatedTime;    
 }
 
 function totalItems(){
